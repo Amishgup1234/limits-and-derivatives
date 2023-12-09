@@ -2,7 +2,7 @@ import streamlit as st
 import sympy as sp
 
 # Title of the webpage will be Passion
-st.title('Limits, Derivatives and Integrals')
+st.title('Calculas')
 
 # Create a selectbox for the menu
 menu = st.sidebar.selectbox('Menu', ['Find limit of a function', 'Find derivative of a function', 'Find integral of a function'])
