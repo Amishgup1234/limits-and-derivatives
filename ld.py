@@ -35,18 +35,18 @@ for i in range(0, len(keypad_buttons), 5):
             else:
                 row[j].button(button, key=f'key_{i+j}', help=f'Click to add {button} to the expression', on_click=lambda b=button: st.session_state.update(expression_input=expression_input + b + '(') if b in {'x', 'sin', 'cos', 'tan', 'exp', 'sqrt'} else st.session_state.update(expression_input=expression_input + b))
 
-# Concatenate the clicked buttons to form the expression
-expression = expression_input
+# Add a text input field for manual entry
+expression_input = st.text_input("Enter your expression", expression_input)
 
 # Display the current expression
-st.write("Current Expression:", expression)
+st.write("Current Expression:", expression_input)
 
 if menu == 'Find limit of a function':
     limit_point_str = st.text_input("Enter the limit point")
     if st.button('Calculate Limit'):
         try:
             limit_point = sp.simplify(limit_point_str)
-            result = sp.limit(sp.sympify(expression), x, limit_point)
+            result = sp.limit(sp.sympify(expression_input), x, limit_point)
             st.write(f"Limit as x approaches {sp.latex(limit_point)}:", result)
         except Exception as e:
             st.error(f'Error calculating limit: {str(e)}')
@@ -54,7 +54,7 @@ if menu == 'Find limit of a function':
 elif menu == 'Find derivative of a function':
     if st.button('Calculate Derivative'):
         try:
-            df = sp.diff(sp.sympify(expression), x)
+            df = sp.diff(sp.sympify(expression_input), x)
             simplified_df = sp.simplify(df)
             st.write("Derivative:", simplified_df)
         except Exception as e:
