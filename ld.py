@@ -11,11 +11,11 @@ x = sp.symbols('x')
 
 # Keypad buttons for mathematical symbols and operators
 keypad_buttons = [
-    '1', '2', '3', '4', '5',
-    '6', '7', '8', '9', '0',
-    '+', '-', '*', '/', 'Backspace',
-    'x', '(', ')', 'sin', 'cos',
-    'tan', 'exp', 'sqrt', '^2', 'Clear'
+    '1', '2', '3', '+', '-',
+    '4', '5', '6', '*', '/',
+    '7', '8', '9', '(', ')',
+    'sin', 'cos', 'tan', '0', 'x',
+    'exp', '^2', 'sqrt', 'Backspace', 'Clear'
 ]
 
 if 'expression_input' not in st.session_state:
