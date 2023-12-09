@@ -2,20 +2,20 @@ import streamlit as st
 import sympy as sp
 
 # Title of the webpage will be Passion
-st.title('Limits And Derivatives')
+st.title('Limits, Derivatives and Integrals')
 
 # Create a selectbox for the menu
-menu = st.sidebar.selectbox('Menu', ['Find limit of a function', 'Find derivative of a function'])
+menu = st.sidebar.selectbox('Menu', ['Find limit of a function', 'Find derivative of a function', 'Find integral of a function'])
 
 x = sp.symbols('x')
 
 # Keypad buttons for mathematical symbols and operators
 keypad_buttons = [
-    '1', '2', '3', '+', '-',
-    '4', '5', '6', '*', '/',
-    '7', '8', '9', '(', ')',
-    'sin', 'cos', 'tan', '0', 'x',
-    'exp', '^2', 'sqrt', 'Backspace', 'Clear'
+    '1', '2', '3', '0', 'x',
+    '4', '5', '6', '+', '-',
+    '7', '8', '9', '*', '/',
+    'sin', 'cos', 'tan', '(', ')',
+    'exp', 'log', '^2', 'sqrt', 'Backspace', 'Clear'
 ]
 
 if 'expression_input' not in st.session_state:
@@ -33,7 +33,7 @@ for i in range(0, len(keypad_buttons), 5):
             elif button == 'Clear':
                 row[j].button(button, key=f'key_{i+j}', help=f'Click to clear the expression', on_click=lambda: st.session_state.update(expression_input=""))
             else:
-                row[j].button(button, key=f'key_{i+j}', help=f'Click to add {button} to the expression', on_click=lambda b=button: st.session_state.update(expression_input=expression_input + b + '(') if b in {'x', 'sin', 'cos', 'tan', 'exp', 'sqrt'} else st.session_state.update(expression_input=expression_input + b))
+                row[j].button(button, key=f'key_{i+j}', help=f'Click to add {button} to the expression', on_click=lambda b=button: st.session_state.update(expression_input=expression_input + b + '(') if b in {'x', 'sin', 'cos', 'tan', 'exp', 'sqrt', 'log'} else st.session_state.update(expression_input=expression_input + b))
 
 # Add a text input field for manual entry
 expression_input = st.text_input("Enter your expression", expression_input)
@@ -59,3 +59,11 @@ elif menu == 'Find derivative of a function':
             st.write("Derivative:", simplified_df)
         except Exception as e:
             st.error(f'Error calculating derivative: {str(e)}')
+
+elif menu == 'Find integral of a function':
+    if st.button('Calculate Integral'):
+        try:
+            integral = sp.integrate(sp.sympify(expression_input), x)
+            st.write("Integral:", integral)
+        except Exception as e:
+            st.error(f'Error calculating integral: {str(e)}')
